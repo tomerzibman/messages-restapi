@@ -22,7 +22,6 @@ exports.getPosts = (req, res, next) => {
 exports.postPost = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log('Hereherherehr');
         return res.status(422).json({
             message: 'Validation failed, entered data is incorrect',
             errors: errors.array()
@@ -34,6 +33,7 @@ exports.postPost = (req, res, next) => {
     const post = new Post({
         title: title, 
         content: content,
+        imageUrl: 'images/bookb.png',
         creator: { name: 'Tomer' }
     });
     post.save().then(post => {
@@ -42,14 +42,4 @@ exports.postPost = (req, res, next) => {
             post: post
         });
     }).catch(err => console.log(err));
-    res.status(201).json({
-        message: "Post created successfully!",
-        post: {
-            _id: new Date().toISOString(), 
-            title: title, 
-            content: content, 
-            creator: { name: 'Tomer' }, 
-            createdAt: new Date()
-        }
-    });
 };
